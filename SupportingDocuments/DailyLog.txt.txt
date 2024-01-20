@@ -1,0 +1,8 @@
+Date 	: Task 			: Progress
+
+1/13/24	: laptop status		: Done
+	: Electrical Doc share	: Done
+	: No code->code->Move	: 
+	: AprilTags		: Review hardware part
+	: Github intro		: Done
+1/17/24	: 

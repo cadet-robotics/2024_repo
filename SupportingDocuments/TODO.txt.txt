@@ -1,0 +1,4 @@
+Date 	: Tasks 		: Done (Y/N)
+	 
+1/13/24	: Apriltags		: N
+	:
