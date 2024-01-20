@@ -24,10 +24,17 @@ public class DriveWithRelativeGampad extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xSpeed = -RobotContainer.m_driverController.getLeftY();
-    double ySpeed = RobotContainer.m_driverController.getLeftX();
-    double rotSpeed = RobotContainer.m_driverController.getRightX();
-    m_drive.drive(xSpeed,ySpeed,0.0,false,true);
+    double ySpeed = 0, xSpeed = 0, rotSpeed = 0;
+    if (RobotContainer.m_driverController.getLeftY() > 0.1 || RobotContainer.m_driverController.getLeftY() < -0.1) {
+        ySpeed = RobotContainer.m_driverController.getLeftY();
+    }
+    if (RobotContainer.m_driverController.getLeftX() > 0.1 || RobotContainer.m_driverController.getLeftX() < -0.1) {
+        xSpeed = RobotContainer.m_driverController.getLeftX();
+    }
+    if (RobotContainer.m_driverController.getRightX() > 0.1 || RobotContainer.m_driverController.getRightX() < -0.1) {
+        rotSpeed = RobotContainer.m_driverController.getRightX();
+    }
+    m_drive.drive(-ySpeed,-xSpeed,0,false,true);
   }
 
   // Called once the command ends or is interrupted.
