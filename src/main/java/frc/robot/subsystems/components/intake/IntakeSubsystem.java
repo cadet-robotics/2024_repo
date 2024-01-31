@@ -3,15 +3,15 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems.components.intake;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import frc.robot.Constants.OperatorConstants;
 
 /** Add your docs here. */
 public class IntakeSubsystem extends SubsystemBase
 {
-    private final Spark m_intake = new Spark(11);
+    private final CANSparkMax m_intake = new CANSparkMax(OperatorConstants.kIntakeMotorCanId , MotorType.kBrushless);
     /** Creates a new DriveSubsystem. */
     public IntakeSubsystem()
     {
@@ -21,7 +21,7 @@ public class IntakeSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        SmartDashboard.putNumber("Intake Power", m_intake.get());
+
     }
 
     public void ControlIntake(double power)

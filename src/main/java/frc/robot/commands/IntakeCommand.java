@@ -33,7 +33,6 @@ public class IntakeCommand extends Command {
         if (RobotContainer.m_driverController.getL2Axis() > OperatorConstants.DEADZONE)
         {
             m_intake.ControlIntake(-RobotContainer.m_driverController.getL2Axis());
-            SmartDashboard.putNumber("L2 foo", RobotContainer.m_driverController.getL2Axis());
         }
         else if (RobotContainer.m_driverController.getR2Axis() > OperatorConstants.DEADZONE)
         {
