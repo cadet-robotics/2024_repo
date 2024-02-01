@@ -37,7 +37,8 @@ public class RobotContainer {
         drive.setDefaultCommand(new DriveWithRelativeGampad(drive));
         intake = new IntakeSubsystem();
         intake.setDefaultCommand(new IntakeCommand(intake));
-
+        launcherFire = new LauncherFireSubsystem();
+        launcherFire.setDefaultCommand(new LauncherFireCommand(launcherFire));
         // Configure the trigger bindings
         configureBindings();
     }
