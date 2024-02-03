@@ -3,8 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.components.intake.IntakeSubsystem;
@@ -24,8 +22,10 @@ public class IntakeCommand extends Command {
     public void initialize()
     {
     }
-
-    // Called every time the scheduler runs while the command is scheduled.
+    
+    // If the left trigger is above the deadzone then the outtake runs.
+    // If the right trigger is above the deadzone then the intake runs.
+    // Sets power to 0
     @Override
     public void execute()
     {

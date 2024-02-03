@@ -26,6 +26,8 @@ public class DriveWithRelativeGampad extends Command {
     }
     
     // Called every time the scheduler runs while the command is scheduled.
+    // Sets up drive motors to ingore deadzone inputs.
+    // Allows drive to run.
     @Override
     public void execute()
     {
