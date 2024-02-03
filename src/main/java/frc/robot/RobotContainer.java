@@ -6,46 +6,50 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.DriveWithRelativeGampad;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.drive.swerve.DriveSubsystem;
+import frc.robot.subsystems.drive.swerve.SwerveDriveCommand;
+import frc.robot.subsystems.intake.IntakeCommand;
+import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.launcherFiring.LauncherFiringSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.subsystems.components.intake.IntakeSubsystem;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
-public class RobotContainer {
+public class RobotContainer
+{
     // The robot's subsystems and commands are defined here...
     private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-    public final DriveSubsystem drive;
-    public final IntakeSubsystem intake;
-
+    private final DriveSubsystem drive;
+    private final IntakeSubsystem intake;
+    private final LauncherFiringSubsystem launcher;
+    
     // Replace with CommandPS4Controller or CommandJoystick if needed
     public static final CommandPS4Controller m_driverController =
             new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
-    public RobotContainer() {
+    public RobotContainer()
+    {
+        // create subsystems
         drive = new DriveSubsystem();
-        drive.setDefaultCommand(new DriveWithRelativeGampad(drive));
         intake = new IntakeSubsystem();
-        intake.setDefaultCommand(new IntakeCommand(intake));
-        launcherFire = new LauncherFireSubsystem();
-        launcherFire.setDefaultCommand(new LauncherFireCommand(launcherFire));
+        launcher = new LauncherFiringSubsystem();
+
         // Configure the trigger bindings
         configureBindings();
-        
+
     }
 
-    
+
 
     /**
      * Use this method to define your trigger->command mappings. Triggers can be created via the

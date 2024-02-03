@@ -2,11 +2,12 @@ package frc.robot.utilities;
 
 import frc.robot.Constants.OperatorConstants;
 
-public class Utilities 
+public class Utilities
 {
-    
+
     /**
      * Ignores values inside of the deadzone
+     * 
      * @param value Value to evaluate
      * @return passed in value or zero if inside deadzone
      */
