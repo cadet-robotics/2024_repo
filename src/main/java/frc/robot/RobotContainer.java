@@ -8,10 +8,12 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.climber.ClimberSubsystem;
 import frc.robot.subsystems.drive.swerve.DriveSubsystem;
 import frc.robot.subsystems.drive.swerve.SwerveDriveCommand;
 import frc.robot.subsystems.intake.IntakeCommand;
 import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.launcherElevation.LauncherElevationSubsystem;
 import frc.robot.subsystems.launcherFiring.LauncherFiringSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -31,10 +33,16 @@ public class RobotContainer
     private final DriveSubsystem drive;
     private final IntakeSubsystem intake;
     private final LauncherFiringSubsystem launcher;
+    private final LauncherElevationSubsystem elevation;
+    private final ClimberSubsystem climber;
     
     // Replace with CommandPS4Controller or CommandJoystick if needed
     public static final CommandPS4Controller m_driverController =
             new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
+
+    
+    public static final CommandPS4Controller m_coDriverController =
+            new CommandPS4Controller(OperatorConstants.kCoDriverControllerPort);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()
@@ -43,6 +51,8 @@ public class RobotContainer
         drive = new DriveSubsystem();
         intake = new IntakeSubsystem();
         launcher = new LauncherFiringSubsystem();
+        elevation = new LauncherElevationSubsystem();
+        climber = new ClimberSubsystem();
 
         // Configure the trigger bindings
         configureBindings();

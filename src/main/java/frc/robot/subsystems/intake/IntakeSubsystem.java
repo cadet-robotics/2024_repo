@@ -9,12 +9,14 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import frc.robot.Constants.OperatorConstants;
 
-/** Add your docs here. */
+/**
+ * Subsystem used to control the intake for feeding note into the robot
+ */
 public class IntakeSubsystem extends SubsystemBase
 {
     // motor that control in the disc intake
     private final CANSparkMax intakeMotor =
-            new CANSparkMax(OperatorConstants.kIntakeMotorCanId, MotorType.kBrushless);
+            new CANSparkMax(OperatorConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
 
     /** Creates a new IntakeSubsystem. */
     public IntakeSubsystem()

@@ -18,8 +18,12 @@ public final class Constants
     public static class OperatorConstants
     {
         public static final int kDriverControllerPort = 0;
+        public static final int kCoDriverControllerPort = 1;
         public static final double DEADZONE = 0.065;
-        public static final int kIntakeMotorCanId = 18;
+        public static final int INTAKE_MOTOR_ID = 18;
+        public static final int CLIMBER_MOTOR_ID = 21;
+        public static final double CLIMB_ASCEND_SPEED = 0.5;
+        public static final double CLIMB_DESCEND_SPEED = -0.25;
 
     }
 }
