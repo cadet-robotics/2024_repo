@@ -15,6 +15,7 @@ import frc.robot.subsystems.intake.IntakeCommand;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.launcherElevation.LauncherElevationSubsystem;
 import frc.robot.subsystems.launcherFiring.LauncherFiringSubsystem;
+import frc.robot.subsystems.limitSwitchStateMonitor.LimitSwitchStateMonitorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -35,6 +36,7 @@ public class RobotContainer
     private final LauncherFiringSubsystem launcher;
     private final LauncherElevationSubsystem elevation;
     private final ClimberSubsystem climber;
+    private final LimitSwitchStateMonitorSubsystem limitSwitchStateMonitor;
     
     // Replace with CommandPS4Controller or CommandJoystick if needed
     public static final CommandPS4Controller m_driverController =
@@ -53,6 +55,7 @@ public class RobotContainer
         launcher = new LauncherFiringSubsystem();
         elevation = new LauncherElevationSubsystem();
         climber = new ClimberSubsystem();
+        limitSwitchStateMonitor = new LimitSwitchStateMonitorSubsystem();
 
         // Configure the trigger bindings
         configureBindings();
