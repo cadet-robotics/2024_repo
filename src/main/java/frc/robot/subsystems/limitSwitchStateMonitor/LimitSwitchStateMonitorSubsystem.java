@@ -11,6 +11,10 @@ public class LimitSwitchStateMonitorSubsystem extends SubsystemBase
 {
     // Initializes a DigitalInput on DIOs
     DigitalInput[] limitSwitches = new DigitalInput[4];
+    String[] limitSwitchNames = new String[] {"CLIMB_ASCEND_LS",
+                                              "CLIMB_DESCEND_LS",
+                                              "LAUNCH_ELEV_ASCEND_LS",
+                                              "LAUNCH_ELEV_DESCEND_LS"};
     
     /** Creates a new Subsystem. */
     public LimitSwitchStateMonitorSubsystem()
@@ -26,7 +30,7 @@ public class LimitSwitchStateMonitorSubsystem extends SubsystemBase
     {
         for(int i = 0; i < 4; ++i)
         {
-            SmartDashboard.putBoolean("LimitSwitch " + (i + 1), limitSwitches[i].get());
+            SmartDashboard.putBoolean(limitSwitchNames[i], limitSwitches[i].get());
         }
     }
 

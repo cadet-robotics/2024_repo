@@ -4,17 +4,18 @@ import java.util.Set;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.subsystems.limitSwitchStateMonitor.LimitSwitchStateMonitorSubsystem;
 import frc.robot.RobotContainer;
 
 /**
  * Command used to control robot as it climbs on chain  
  */
-public class ClimberCommand extends Command
+public class ClimberAscendCommand extends Command
 {
     // controlling subsystem
     private ClimberSubsystem climberSubsystem;
 
-    public ClimberCommand(ClimberSubsystem subsystem)
+    public ClimberAscendCommand(ClimberSubsystem subsystem)
     {
         climberSubsystem = subsystem;
         addRequirements(climberSubsystem);
@@ -23,8 +24,21 @@ public class ClimberCommand extends Command
     @Override
     public void initialize()
     {
-        climberSubsystem.ClimberMotor().set(OperatorConstants.CLIMB_ASCEND_SPEED);
 
+    }
+
+    @Override
+    public void execute()
+    {
+        if (climberSubsystem.GetLimitSwitchSubsystem().GetLimitSwitchState(OperatorConstants.CLIMB_ASCEND_LS))
+        {
+            //limit switch for ascend is true stop motor so nothing breaks
+            climberSubsystem.ClimberMotor().set(0);
+        }
+        else
+        {
+            climberSubsystem.ClimberMotor().set(OperatorConstants.CLIMB_ASCEND_SPEED);
+        }
     }
 
     @Override

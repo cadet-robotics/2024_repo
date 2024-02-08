@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.limitSwitchStateMonitor.LimitSwitchStateMonitorSubsystem;
 
 /**
  * Subsystem used to control robot as it climbs on chain
@@ -15,12 +16,19 @@ public class ClimberSubsystem extends SubsystemBase
     // motor that control in the disc intake
     private final CANSparkMax climberMotor =
             new CANSparkMax(OperatorConstants.CLIMBER_MOTOR_ID, MotorType.kBrushless);
+    
+    private LimitSwitchStateMonitorSubsystem limitSwitchSubsystem;
 
     /** Creates a new Subsystem. */
-    public ClimberSubsystem()
+    public ClimberSubsystem(LimitSwitchStateMonitorSubsystem limitSwitchSubsystem)
     {        
-        // set button to trigger this command
-        RobotContainer.m_coDriverController.button(PS4Controller.Button.kTriangle.value).whileTrue(new ClimberCommand(this));
+        this.limitSwitchSubsystem = limitSwitchSubsystem;
+
+        // set triangle button to trigger Ascend command
+        RobotContainer.m_coDriverController.button(PS4Controller.Button.kTriangle.value).whileTrue(new ClimberAscendCommand(this));
+
+        // set cross button to trigger Descend command
+        RobotContainer.m_coDriverController.button(PS4Controller.Button.kCross.value).whileTrue(new ClimberDescendCommand(this));
     }
 
     @Override
@@ -37,5 +45,14 @@ public class ClimberSubsystem extends SubsystemBase
     public CANSparkMax ClimberMotor()
     {
         return climberMotor;
+    }
+
+    /**
+     * Accessor for the limitSwitchSubsystem 
+     * @return the one limitSwitchSubsystem
+     */
+    public LimitSwitchStateMonitorSubsystem GetLimitSwitchSubsystem()
+    {
+        return limitSwitchSubsystem;
     }
 }

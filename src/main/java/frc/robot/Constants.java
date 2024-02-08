@@ -26,6 +26,12 @@ public final class Constants
         public static final int CLIMBER_MOTOR_ID = 21;
         public static final double CLIMB_ASCEND_SPEED = 0.5;
         public static final double CLIMB_DESCEND_SPEED = -0.25;
+        //Climber limit switch indexes
+        public static final int CLIMB_ASCEND_LS = 0;
+        public static final int CLIMB_DESCEND_LS = 1;
+        //Launch limit switch indexes 
+        public static final int LAUNCH_ELEV_ASCEND_LS = 2;
+        public static final int LAUNCH_ELEV_DESCEND_LS = 3;
 
     }
 }
