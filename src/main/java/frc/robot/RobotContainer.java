@@ -53,9 +53,9 @@ public class RobotContainer
         drive = new DriveSubsystem();
         intake = new IntakeSubsystem();
         launcher = new LauncherFiringSubsystem();
-        elevation = new LauncherElevationSubsystem();
         limitSwitchStateMonitor = new LimitSwitchStateMonitorSubsystem();
         climber = new ClimberSubsystem(limitSwitchStateMonitor);
+        elevation = new LauncherElevationSubsystem(limitSwitchStateMonitor);
 
         // Configure the trigger bindings
         configureBindings();

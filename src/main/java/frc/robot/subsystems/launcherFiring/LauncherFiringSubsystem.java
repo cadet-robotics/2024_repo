@@ -30,11 +30,11 @@ public class LauncherFiringSubsystem extends SubsystemBase
 
     }
 
-    public static void ControlLaunchMotor1(int power)
+    public static void ControlLaunchMotor1(double power)
     {
         launchMotor1.set(power);
     }
-    public static void ControlLaunchMotor2(int power2)
+    public static void ControlLaunchMotor2(double power2)
     {
         launchMotor2.set(power2);
     }

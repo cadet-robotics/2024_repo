@@ -1,11 +1,7 @@
 package frc.robot.subsystems.climber;
 
-import java.util.Set;
-import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.limitSwitchStateMonitor.LimitSwitchStateMonitorSubsystem;
-import frc.robot.RobotContainer;
 
 /**
  * Command used to control robot as it climbs on chain  
