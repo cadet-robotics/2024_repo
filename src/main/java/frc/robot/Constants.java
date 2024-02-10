@@ -20,11 +20,11 @@ public final class Constants
         public static final int kDriverControllerPort = 0;
         public static final int kCoDriverControllerPort = 1;
         public static final double DEADZONE = 0.065;
-        public static final int INTAKE_MOTOR_ID = 22;//TO DO Change back to 18
+        public static final int INTAKE_MOTOR_ID = 21; //TO DO Change back to 18
         public static final int LAUNCH_MOTOR_ID1 = 18;
         public static final int LAUNCH_MOTOR_ID2 = 19;
         public static final int LAUNCH_ELEVATION_MOTOR_ID = 20;
-        public static final int CLIMBER_MOTOR_ID = 21;
+        public static final int CLIMBER_MOTOR_ID = 22;
         public static final double CLIMB_ASCEND_SPEED = 0.5;
         public static final double CLIMB_DESCEND_SPEED = -0.25;
         //Climber limit switch indexes
@@ -33,6 +33,6 @@ public final class Constants
         //Launch limit switch indexes 
         public static final int LAUNCH_ELEV_ASCEND_LS = 2;
         public static final int LAUNCH_ELEV_DESCEND_LS = 3;
-
+        public static final int LAUNCH_FIRE_LIGHTS = 7;
     }
 }

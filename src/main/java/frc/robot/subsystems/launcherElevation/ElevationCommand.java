@@ -48,8 +48,6 @@ public class ElevationCommand extends Command
             powerToSet = Utilities.applyDeadzone(joystickPower);
         }
 
-        System.out.println(powerToSet);
-
         launcherElevationSubsystem.ElevationMotor().set(powerToSet);
     }
 }

@@ -41,7 +41,7 @@ public class IntakeCommand extends Command
         else
         {
             // no controller intput, set intake speed to 0
-            intakeSubsystem.IntakeMotor().set(0);
+            intakeSubsystem.IntakeMotor().stopMotor();;
         }
     }
 }

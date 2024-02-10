@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.limitSwitchStateMonitor.LimitSwitchStateMonitorSubsystem;
+import frc.robot.subsystems.limitSwitchStateMonitor.SensorStateMonitorSubsystem;
 
 /**
  * Subsystem used to control robot as it climbs on chain
@@ -17,10 +17,10 @@ public class ClimberSubsystem extends SubsystemBase
     private final CANSparkMax climberMotor =
             new CANSparkMax(OperatorConstants.CLIMBER_MOTOR_ID, MotorType.kBrushless);
     
-    private LimitSwitchStateMonitorSubsystem limitSwitchSubsystem;
+    private SensorStateMonitorSubsystem limitSwitchSubsystem;
 
     /** Creates a new Subsystem. */
-    public ClimberSubsystem(LimitSwitchStateMonitorSubsystem limitSwitchSubsystem)
+    public ClimberSubsystem(SensorStateMonitorSubsystem limitSwitchSubsystem)
     {        
         this.limitSwitchSubsystem = limitSwitchSubsystem;
 
@@ -51,7 +51,7 @@ public class ClimberSubsystem extends SubsystemBase
      * Accessor for the limitSwitchSubsystem 
      * @return the one limitSwitchSubsystem
      */
-    public LimitSwitchStateMonitorSubsystem GetLimitSwitchSubsystem()
+    public SensorStateMonitorSubsystem GetLimitSwitchSubsystem()
     {
         return limitSwitchSubsystem;
     }

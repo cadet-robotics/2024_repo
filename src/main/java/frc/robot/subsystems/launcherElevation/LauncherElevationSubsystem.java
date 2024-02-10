@@ -8,7 +8,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.limitSwitchStateMonitor.LimitSwitchStateMonitorSubsystem;
+import frc.robot.subsystems.limitSwitchStateMonitor.SensorStateMonitorSubsystem;
 
 /**
  * Subsystem used to set the proper angle for the firing system
@@ -17,11 +17,12 @@ public class LauncherElevationSubsystem extends SubsystemBase
 {
     private final CANSparkMax elevationMotor =
             new CANSparkMax(OperatorConstants.LAUNCH_ELEVATION_MOTOR_ID, MotorType.kBrushless);
-    private LimitSwitchStateMonitorSubsystem limitSwitchSubsystem;
+    private SensorStateMonitorSubsystem sensorSubsystem;
+    
     /** Creates a new Subsystem. */
-    public LauncherElevationSubsystem(LimitSwitchStateMonitorSubsystem limitSwitchSubsystem)
+    public LauncherElevationSubsystem(SensorStateMonitorSubsystem sensorSubsystem)
     {
-        this.limitSwitchSubsystem = limitSwitchSubsystem;
+        this.sensorSubsystem = sensorSubsystem;
 
         setDefaultCommand(new ElevationCommand(this));
     }
@@ -40,8 +41,8 @@ public class LauncherElevationSubsystem extends SubsystemBase
         return elevationMotor;
     }
 
-    public LimitSwitchStateMonitorSubsystem GetLimitSwitchSubsystem()
+    public SensorStateMonitorSubsystem GetLimitSwitchSubsystem()
     {
-        return limitSwitchSubsystem;
+        return sensorSubsystem;
     }
 }

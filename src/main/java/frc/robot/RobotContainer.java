@@ -15,7 +15,8 @@ import frc.robot.subsystems.intake.IntakeCommand;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.launcherElevation.LauncherElevationSubsystem;
 import frc.robot.subsystems.launcherFiring.LauncherFiringSubsystem;
-import frc.robot.subsystems.limitSwitchStateMonitor.LimitSwitchStateMonitorSubsystem;
+import frc.robot.subsystems.limitSwitchStateMonitor.SensorStateMonitorSubsystem;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -36,7 +37,7 @@ public class RobotContainer
     private final LauncherFiringSubsystem launcher;
     private final LauncherElevationSubsystem elevation;
     private final ClimberSubsystem climber;
-    private final LimitSwitchStateMonitorSubsystem limitSwitchStateMonitor;
+    private final SensorStateMonitorSubsystem sensorStateMonitor;
     
     // Replace with CommandPS4Controller or CommandJoystick if needed
     public static final CommandPS4Controller m_driverController =
@@ -52,21 +53,17 @@ public class RobotContainer
         // create subsystems
         drive = new DriveSubsystem();
         intake = new IntakeSubsystem();
-        launcher = new LauncherFiringSubsystem();
-        limitSwitchStateMonitor = new LimitSwitchStateMonitorSubsystem();
-        climber = new ClimberSubsystem(limitSwitchStateMonitor);
-        elevation = new LauncherElevationSubsystem(limitSwitchStateMonitor);
+        sensorStateMonitor = new SensorStateMonitorSubsystem();
+        climber = new ClimberSubsystem(sensorStateMonitor);
+        elevation = new LauncherElevationSubsystem(sensorStateMonitor);
+        launcher = new LauncherFiringSubsystem(sensorStateMonitor, intake);
 
         // Configure the trigger bindings
         configureBindings();
 
+        // init cam server
+        CameraServer.startAutomaticCapture();
     }
-
-    public LimitSwitchStateMonitorSubsystem GetLSStateMonitorSubsystem()
-    {
-        return limitSwitchStateMonitor;
-    }
-
 
     /**
      * Use this method to define your trigger->command mappings. Triggers can be created via the

@@ -8,34 +8,61 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.subsystems.limitSwitchStateMonitor.SensorStateMonitorSubsystem;
+import frc.robot.subsystems.intake.IntakeSubsystem;
 
 /**
  * Subsystem used to fire the note 
  */
 public class LauncherFiringSubsystem extends SubsystemBase
 {
-    private static final CANSparkMax launchMotor1 =
-            new CANSparkMax(OperatorConstants.LAUNCH_MOTOR_ID1, MotorType.kBrushless);
-    private static final CANSparkMax launchMotor2 =
-            new CANSparkMax(OperatorConstants.LAUNCH_MOTOR_ID2, MotorType.kBrushless);
-    /** Creates a new Subsystem. */
-    public LauncherFiringSubsystem()
+    private final CANSparkMax[] launchMotors = new CANSparkMax[]
     {
+        new CANSparkMax(OperatorConstants.LAUNCH_MOTOR_ID1, MotorType.kBrushless),
+        new CANSparkMax(OperatorConstants.LAUNCH_MOTOR_ID2, MotorType.kBrushless)
+    };
+
+    private SensorStateMonitorSubsystem sensorSubsystem;
+    private IntakeSubsystem intakeSubsystem;
+
+    public static enum LaunchMotor{
+        TOP,
+        BOTTOM
+    }
+    
+    /** Creates a new Subsystem. */
+    public LauncherFiringSubsystem(SensorStateMonitorSubsystem sensorSubsystem, IntakeSubsystem intakeSubsystem)
+    {
+        this.sensorSubsystem = sensorSubsystem;
+        this.intakeSubsystem = intakeSubsystem;
         setDefaultCommand(new FireCommand(this));
     }
 
     @Override
     public void periodic()
     {
-
+        launchMotors[0].get();
     }
 
-    public static void ControlLaunchMotor1(double power)
+    public void ControlLaunchMotor(LaunchMotor motor, double power)
     {
-        launchMotor1.set(power);
+        launchMotors[motor.ordinal()].set(power);
     }
-    public static void ControlLaunchMotor2(double power2)
+    public IntakeSubsystem IntakeSubsystem()
     {
-        launchMotor2.set(power2);
+        return intakeSubsystem;
+    }
+
+    public void StopAllMotors()
+    {
+        for(int i = 0; i < launchMotors.length; ++i)
+        {
+            launchMotors[i].stopMotor();;
+        }
+    }
+
+    public SensorStateMonitorSubsystem GetPhotoEyeSubsystem()
+    {
+        return sensorSubsystem;
     }
 }
