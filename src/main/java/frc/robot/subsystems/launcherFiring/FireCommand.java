@@ -7,7 +7,7 @@ package frc.robot.subsystems.launcherFiring;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.launcherFiring.LauncherFiringSubsystem.LaunchMotor;;
+import frc.robot.subsystems.launcherFiring.LauncherFiringSubsystem.LaunchMotor;
 
 /**
  * Command used to control firing the note based on input from controller
@@ -50,14 +50,14 @@ public class FireCommand extends Command
                     launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.TOP, 1);
                     launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.BOTTOM, 0.55);
                     launcherFiringSubsystem.IntakeSubsystem().IntakeMotor().set(0.75);
-                    launchInitiated = true;
+                    //launchInitiated = true;
                 }
             }
         }
         else
         {
             launcherFiringSubsystem.StopAllMotors();
-            launcherFiringSubsystem.IntakeSubsystem().IntakeMotor().stopMotor();
+           //launcherFiringSubsystem.IntakeSubsystem().IntakeMotor().stopMotor();
             launchInitiated = false;
         }
     }

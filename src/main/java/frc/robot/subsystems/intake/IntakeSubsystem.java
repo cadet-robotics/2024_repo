@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.subsystems.limitSwitchStateMonitor.SensorStateMonitorSubsystem;
+
 
 /**
  * Subsystem used to control the intake for feeding note into the robot
@@ -18,9 +20,12 @@ public class IntakeSubsystem extends SubsystemBase
     private final CANSparkMax intakeMotor =
             new CANSparkMax(OperatorConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
 
+    private SensorStateMonitorSubsystem sensorSubsystem;
+
     /** Creates a new IntakeSubsystem. */
-    public IntakeSubsystem()
+    public IntakeSubsystem(SensorStateMonitorSubsystem sensorSubsystem)
     {
+        this.sensorSubsystem = sensorSubsystem;
         setDefaultCommand(new IntakeCommand(this));
     }
 
@@ -38,5 +43,9 @@ public class IntakeSubsystem extends SubsystemBase
     public CANSparkMax IntakeMotor()
     {
         return intakeMotor;
+    }
+    public SensorStateMonitorSubsystem GetPhotoEyeSubsystem()
+    {
+        return sensorSubsystem;
     }
 }

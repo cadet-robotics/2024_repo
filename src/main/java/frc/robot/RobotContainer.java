@@ -52,8 +52,8 @@ public class RobotContainer
     {
         // create subsystems
         drive = new DriveSubsystem();
-        intake = new IntakeSubsystem();
         sensorStateMonitor = new SensorStateMonitorSubsystem();
+        intake = new IntakeSubsystem(sensorStateMonitor);
         climber = new ClimberSubsystem(sensorStateMonitor);
         elevation = new LauncherElevationSubsystem(sensorStateMonitor);
         launcher = new LauncherFiringSubsystem(sensorStateMonitor, intake);
@@ -77,12 +77,12 @@ public class RobotContainer
     private void configureBindings()
     {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-        new Trigger(m_exampleSubsystem::exampleCondition)
-                .onTrue(new ExampleCommand(m_exampleSubsystem));
+       //new Trigger(m_exampleSubsystem::exampleCondition)
+         //       .onTrue(new ExampleCommand(m_exampleSubsystem));
 
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
-        m_driverController.button(1).whileTrue(m_exampleSubsystem.exampleMethodCommand());
+       // m_driverController.button(1).whileTrue(m_exampleSubsystem.exampleMethodCommand());
     }
 
     /**

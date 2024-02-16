@@ -7,6 +7,8 @@ package frc.robot.subsystems.intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.limitSwitchStateMonitor.SensorStateMonitorSubsystem;
 
 /**
  * Command used to control intake motor based on input from controller
@@ -15,6 +17,7 @@ public class IntakeCommand extends Command
 {
     // controlling subsytem
     private IntakeSubsystem intakeSubsystem;
+    private SensorStateMonitorSubsystem sensorSubsystem;
 
     /** Creates a new Intake. */
     public IntakeCommand(IntakeSubsystem subsystem)
@@ -23,25 +26,37 @@ public class IntakeCommand extends Command
         addRequirements(intakeSubsystem);
     }
 
+   public boolean Loaded() 
+   {
+       return !intakeSubsystem.GetPhotoEyeSubsystem().GetPhotoEyeState();
+   }
+
     @Override
     public void execute()
     {
-        // prioritizes intake control
-        // checks for value of variable button input, assuming value exceeds deadzone threshold
-        if (RobotContainer.m_driverController.getL2Axis() > OperatorConstants.DEADZONE)
+        if (!Loaded())
         {
-            // intake button active, set motor power
-            intakeSubsystem.IntakeMotor().set(-RobotContainer.m_driverController.getL2Axis());
-        }
-        else if (RobotContainer.m_driverController.getR2Axis() > OperatorConstants.DEADZONE)
-        {
-            // intake button not active, but outake is, set motor power
-            intakeSubsystem.IntakeMotor().set(RobotContainer.m_driverController.getR2Axis());
+            // prioritizes intake control
+            // checks for value of variable button input, assuming value exceeds deadzone threshold
+            if (RobotContainer.m_driverController.getR2Axis() > OperatorConstants.DEADZONE)
+            {
+                // intake button not active, but outake is, set motor power
+                intakeSubsystem.IntakeMotor().set(RobotContainer.m_driverController.getR2Axis());
+            }
+            else
+            {
+                // no controller intput, set intake speed to 0
+                intakeSubsystem.IntakeMotor().stopMotor();
+            }
         }
         else
         {
-            // no controller intput, set intake speed to 0
-            intakeSubsystem.IntakeMotor().stopMotor();;
+            intakeSubsystem.IntakeMotor().stopMotor();
         }
+        if (RobotContainer.m_driverController.getL2Axis() > OperatorConstants.DEADZONE)
+            {
+                // intake button active, set motor power
+                intakeSubsystem.IntakeMotor().set(-RobotContainer.m_driverController.getL2Axis());
+            }
     }
 }
