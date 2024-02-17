@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.FireCommand;
 import frc.robot.subsystems.limitSwitchStateMonitor.SensorStateMonitorSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 
@@ -23,7 +24,6 @@ public class LauncherFiringSubsystem extends SubsystemBase
     };
 
     private SensorStateMonitorSubsystem sensorSubsystem;
-    private IntakeSubsystem intakeSubsystem;
 
     public static enum LaunchMotor{
         TOP,
@@ -31,11 +31,9 @@ public class LauncherFiringSubsystem extends SubsystemBase
     }
     
     /** Creates a new Subsystem. */
-    public LauncherFiringSubsystem(SensorStateMonitorSubsystem sensorSubsystem, IntakeSubsystem intakeSubsystem)
+    public LauncherFiringSubsystem(SensorStateMonitorSubsystem sensorSubsystem)
     {
         this.sensorSubsystem = sensorSubsystem;
-        this.intakeSubsystem = intakeSubsystem;
-        setDefaultCommand(new FireCommand(this));
     }
 
     @Override
@@ -47,10 +45,6 @@ public class LauncherFiringSubsystem extends SubsystemBase
     public void ControlLaunchMotor(LaunchMotor motor, double power)
     {
         launchMotors[motor.ordinal()].set(power);
-    }
-    public IntakeSubsystem IntakeSubsystem()
-    {
-        return intakeSubsystem;
     }
 
     public void StopAllMotors()

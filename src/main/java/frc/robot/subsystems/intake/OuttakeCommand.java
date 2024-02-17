@@ -8,19 +8,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.OperatorConstants;
 
-public class IntakeCommand extends Command {
+public class OuttakeCommand extends Command {
     
     private IntakeSubsystem intakeSubsystem;
     /** Creates a new OuttakeCommand. */
-    public IntakeCommand(IntakeSubsystem subsystem) {
+    public OuttakeCommand(IntakeSubsystem subsystem) {
         // Use addRequirements() here to declare subsystem dependencies.
         intakeSubsystem = subsystem;
         addRequirements(intakeSubsystem);
-    }
-    
-    public boolean Loaded() 
-    {
-        return !intakeSubsystem.GetPhotoEyeSubsystem().GetPhotoEyeState();
     }
 
     // Called when the command is initially scheduled.
@@ -30,7 +25,7 @@ public class IntakeCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intakeSubsystem.setIntake(OperatorConstants.INTAKE_SPEED);
+        intakeSubsystem.setIntake(-OperatorConstants.INTAKE_SPEED);
     }
 
     // Called once the command ends or is interrupted.
@@ -42,6 +37,6 @@ public class IntakeCommand extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Loaded();
+        return false;
     }
 }

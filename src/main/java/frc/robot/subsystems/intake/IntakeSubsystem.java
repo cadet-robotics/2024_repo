@@ -26,7 +26,6 @@ public class IntakeSubsystem extends SubsystemBase
     public IntakeSubsystem(SensorStateMonitorSubsystem sensorSubsystem)
     {
         this.sensorSubsystem = sensorSubsystem;
-        setDefaultCommand(new IntakeCommand(this));
     }
 
     @Override
@@ -35,15 +34,10 @@ public class IntakeSubsystem extends SubsystemBase
 
     }
 
-    /**
-     * Accessor for spark max motor controlling intake
-     * 
-     * @return intake motor
-     */
-    public CANSparkMax IntakeMotor()
-    {
-        return intakeMotor;
+    public void setIntake(double speed){
+        intakeMotor.set(speed);
     }
+
     public SensorStateMonitorSubsystem GetPhotoEyeSubsystem()
     {
         return sensorSubsystem;

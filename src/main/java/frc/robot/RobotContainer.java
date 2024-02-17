@@ -7,12 +7,14 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.FireCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.climber.ClimberSubsystem;
 import frc.robot.subsystems.drive.swerve.DriveSubsystem;
 import frc.robot.subsystems.drive.swerve.SwerveDriveCommand;
 import frc.robot.subsystems.intake.IntakeCommand;
 import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.intake.OuttakeCommand;
 import frc.robot.subsystems.launcherElevation.LauncherElevationSubsystem;
 import frc.robot.subsystems.launcherFiring.LauncherFiringSubsystem;
 import frc.robot.subsystems.limitSwitchStateMonitor.SensorStateMonitorSubsystem;
@@ -56,7 +58,7 @@ public class RobotContainer
         intake = new IntakeSubsystem(sensorStateMonitor);
         climber = new ClimberSubsystem(sensorStateMonitor);
         elevation = new LauncherElevationSubsystem(sensorStateMonitor);
-        launcher = new LauncherFiringSubsystem(sensorStateMonitor, intake);
+        launcher = new LauncherFiringSubsystem(sensorStateMonitor);
 
         // Configure the trigger bindings
         configureBindings();
@@ -82,7 +84,17 @@ public class RobotContainer
 
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
-       // m_driverController.button(1).whileTrue(m_exampleSubsystem.exampleMethodCommand());
+        // m_driverController.button(1).whileTrue(m_exampleSubsystem.exampleMethodCommand());
+        m_driverController.L2().whileTrue(new OuttakeCommand(intake));
+        m_driverController.R2().whileTrue(new IntakeCommand(intake));
+
+
+
+
+
+
+        m_coDriverController.L2().and(m_coDriverController.R2()).whileTrue(new FireCommand(launcher,intake));
+        //.button(1).and(m_coDriverController.button(2)).whileTrue(getAutonomousCommand())
     }
 
     /**
