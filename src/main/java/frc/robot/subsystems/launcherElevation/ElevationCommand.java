@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems.launcherElevation;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.OperatorConstants;
 import frc.robot.utilities.Utilities;
 import frc.robot.RobotContainer;
 
@@ -28,26 +27,7 @@ public class ElevationCommand extends Command
     {
         double powerToSet = 0;
         double joystickPower = RobotContainer.m_coDriverController.getRightY();
-        
-        if (launcherElevationSubsystem.GetLimitSwitchSubsystem().GetLimitSwitchState(OperatorConstants.LAUNCH_ELEV_ASCEND_LS))
-        {
-            if (joystickPower < -OperatorConstants.DEADZONE)
-            {
-                powerToSet = joystickPower;
-            }
-        }
-        else if (launcherElevationSubsystem.GetLimitSwitchSubsystem().GetLimitSwitchState(OperatorConstants.LAUNCH_ELEV_DESCEND_LS))
-        {
-            if (joystickPower > OperatorConstants.DEADZONE)
-            {
-                powerToSet = joystickPower;
-            }
-        }
-        else
-        {
-            powerToSet = Utilities.applyDeadzone(joystickPower);
-        }
-
-        launcherElevationSubsystem.ElevationMotor().set(powerToSet);
+        powerToSet = Utilities.applyDeadzone(joystickPower);
+        launcherElevationSubsystem.SetElevation(powerToSet);
     }
 }
