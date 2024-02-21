@@ -37,7 +37,7 @@ public class FireCommand extends Command
     //     return RobotContainer.m_coDriverController.getR2Axis() > OperatorConstants.DEADZONE && 
     //            RobotContainer.m_coDriverController.getL2Axis() > OperatorConstants.DEADZONE;
     // }
-
+    @Override
     public void initialize() {
         time.restart();
     }
@@ -58,11 +58,13 @@ public class FireCommand extends Command
         }
     
     }
-
+    @Override
     public void end(boolean interrupted){
         launcherFiringSubsystem.StopAllMotors();
+        intakeSubsystem.setIntake(0);
     }
     
+    @Override
     public boolean isFinished(){
         return time.hasElapsed(2);
     }

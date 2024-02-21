@@ -5,7 +5,6 @@
 package frc.robot.subsystems.intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.OperatorConstants;
 
 public class IntakeCommand extends Command {

@@ -8,9 +8,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.FireCommand;
 import frc.robot.subsystems.limitSwitchStateMonitor.SensorStateMonitorSubsystem;
-import frc.robot.subsystems.intake.IntakeSubsystem;
 
 /**
  * Subsystem used to fire the note 
