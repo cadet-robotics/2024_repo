@@ -70,25 +70,25 @@ public class DriveSubsystem extends SubsystemBase
     /** Creates a new DriveSubsystem. */
     public DriveSubsystem()
     {
-    AutoBuilder.configureHolonomic(
-        this::getPose, 
-        this::resetOdometry, 
-        this::getSpeeds, 
-        this::driveSpeeds, 
-        SwerveConstants.AutoConstants.pathFollowerConfig,
-        () -> {
-            // Boolean supplier that controls when the path will be mirrored for the red alliance
-            // This will flip the path being followed to the red side of the field.
-            // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+        AutoBuilder.configureHolonomic(
+            this::getPose, 
+            this::resetOdometry, 
+            this::getSpeeds, 
+            this::driveSpeeds, 
+            SwerveConstants.AutoConstants.pathFollowerConfig,
+            () -> {
+                // Boolean supplier that controls when the path will be mirrored for the red alliance
+                // This will flip the path being followed to the red side of the field.
+                // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-            var alliance = DriverStation.getAlliance();
-            if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;
-            }
-            return false;
-        },
-        this
-    );
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
+            },
+            this
+        );
         setDefaultCommand(new SwerveDriveCommand(this));
     }
 
@@ -100,7 +100,7 @@ public class DriveSubsystem extends SubsystemBase
         {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_rearLeft.getPosition(),
                 m_rearRight.getPosition()
         });
-        SmartDashboard.putNumber("gyro", ahrs.getAngle());
+        SmartDashboard.putNumber("gyro", getHeading());
     }
 
     /**
@@ -217,7 +217,7 @@ public class DriveSubsystem extends SubsystemBase
         
         driveSpeeds(fieldRelative
                         ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered,
-                                rotDelivered, Rotation2d.fromDegrees(ahrs.getAngle()))
+                                rotDelivered,m_odometry.getPoseMeters().getRotation())
                         : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
 
     }
@@ -293,7 +293,7 @@ public class DriveSubsystem extends SubsystemBase
      */
     public double getHeading()
     {
-        return ahrs.getAngle();
+        return m_odometry.getPoseMeters().getRotation().getDegrees();
     }
 
     /**
