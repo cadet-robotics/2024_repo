@@ -18,7 +18,20 @@ import frc.robot.subsystems.launcherElevation.HomeElevation;
 import frc.robot.subsystems.launcherElevation.LauncherElevationSubsystem;
 import frc.robot.subsystems.launcherFiring.LauncherFiringSubsystem;
 import frc.robot.subsystems.limitSwitchStateMonitor.SensorStateMonitorSubsystem;
+import java.util.List;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -50,6 +63,7 @@ public class RobotContainer
     public static final CommandPS4Controller m_coDriverController =
             new CommandPS4Controller(OperatorConstants.kCoDriverControllerPort);
 
+    private final SendableChooser<Command> autoChooser;
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()
     {
@@ -61,11 +75,21 @@ public class RobotContainer
         elevation = new LauncherElevationSubsystem(sensorStateMonitor);
         launcher = new LauncherFiringSubsystem(sensorStateMonitor);
 
+        NamedCommands.registerCommand("HomeElevation", Commands.sequence(new HomeElevation(elevation)));
+        NamedCommands.registerCommand("ShootNote", Commands.sequence(new FireCommand(launcher, intake)));
+        NamedCommands.registerCommand("IntakeNote", Commands.sequence(new IntakeCommand(intake)));
+        NamedCommands.registerCommand("OutTakeNote", Commands.sequence(new IntakeCommand(intake)));
+
         // Configure the trigger bindings
         configureBindings();
 
         // init cam server
         CameraServer.startAutomaticCapture();
+
+        autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
+        SmartDashboard.putData("Auto Mode", autoChooser);
+
+
     }
 
     /**
@@ -100,8 +124,39 @@ public class RobotContainer
 
 
         m_coDriverController.L2().and(m_coDriverController.R2()).whileTrue(new FireCommand(launcher,intake));
-        m_coDriverController.pov(0).whileTrue(new HomeElevation(elevation));
+m_coDriverController.pov(0).whileTrue(new HomeElevation(elevation));
         //.button(1).and(m_coDriverController.button(2)).whileTrue(getAutonomousCommand())
+    
+        // Add a button to run the example auto to SmartDashboard, this will also be in the auto chooser built above
+        SmartDashboard.putData("Example Auto", new PathPlannerAuto("Example Auto"));
+
+        // Add a button to run pathfinding commands to SmartDashboard
+        SmartDashboard.putData("Pathfind to Pickup Pos", AutoBuilder.pathfindToPose(
+            new Pose2d(14.0, 6.5, Rotation2d.fromDegrees(0)), 
+            new PathConstraints(
+            4.0, 4.0, 
+            Units.degreesToRadians(360), Units.degreesToRadians(540)),0,2.0));
+            SmartDashboard.putData("Pathfind to Scoring Pos", AutoBuilder.pathfindToPose(
+            new Pose2d(2.15, 3.0, Rotation2d.fromDegrees(180)), 
+            new PathConstraints(
+            4.0, 4.0, 
+            Units.degreesToRadians(360), Units.degreesToRadians(540)),0,0));
+
+        // Add a button to SmartDashboard that will create and follow an on-the-fly path
+        // This example will simply move the robot 2m in the +X field direction
+        SmartDashboard.putData("On-the-fly path", Commands.runOnce(() -> {
+            Pose2d currentPose = drive.getPose();
+            
+            // The rotation component in these poses represents the direction of travel
+            Pose2d startPos = new Pose2d(currentPose.getTranslation(), new Rotation2d());
+            Pose2d endPos = new Pose2d(currentPose.getTranslation().plus(new Translation2d(2.0, 0.0)), new Rotation2d());
+
+            List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(startPos, endPos);
+            PathPlannerPath path = new PathPlannerPath(bezierPoints, 
+            new PathConstraints(4.0, 4.0, Units.degreesToRadians(360), Units.degreesToRadians(540)),  
+            new GoalEndState(0.0, currentPose.getRotation()));
+        }));
+
     }
 
     /**
@@ -111,7 +166,8 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
-        // An example command will be run in autonomous
-        return Autos.exampleAuto(m_exampleSubsystem);
+        return autoChooser.getSelected();
     }
+
+    
 }
