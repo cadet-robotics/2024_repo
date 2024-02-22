@@ -51,9 +51,9 @@ public class FireCommand extends Command
             // Motor button active, set motor power
             
             launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.TOP, 1);
-            launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.BOTTOM, 0.55);
-            if(time.hasElapsed(0.5))
-                intakeSubsystem.setIntake(0.75);
+            launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.BOTTOM, 0.75);
+            if(time.hasElapsed(1.5))
+                intakeSubsystem.setIntake(1);
                 
         }
     
@@ -66,6 +66,6 @@ public class FireCommand extends Command
     
     @Override
     public boolean isFinished(){
-        return time.hasElapsed(2);
-    }
+        return time.hasElapsed(3.5);
+        }
 }

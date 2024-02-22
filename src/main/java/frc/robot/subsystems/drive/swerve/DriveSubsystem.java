@@ -62,7 +62,7 @@ public class DriveSubsystem extends SubsystemBase
     // Odometry class for tracking robot pose
     SwerveDriveOdometry m_odometry =
             new SwerveDriveOdometry(SwerveConstants.DriveConstants.kDriveKinematics,
-                    Rotation2d.fromDegrees(ahrs.getAngle()), new SwerveModulePosition[]
+                    Rotation2d.fromDegrees(-ahrs.getAngle()), new SwerveModulePosition[]
                     {m_frontLeft.getPosition(), m_frontRight.getPosition(),
                             m_rearLeft.getPosition(), m_rearRight.getPosition()
                     });
@@ -96,7 +96,7 @@ public class DriveSubsystem extends SubsystemBase
     public void periodic()
     {
         // Update the odometry in the periodic block
-        m_odometry.update(Rotation2d.fromDegrees(ahrs.getAngle()), new SwerveModulePosition[]
+        m_odometry.update(Rotation2d.fromDegrees(-ahrs.getAngle()), new SwerveModulePosition[]
         {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_rearLeft.getPosition(),
                 m_rearRight.getPosition()
         });
@@ -120,7 +120,7 @@ public class DriveSubsystem extends SubsystemBase
      */
     public void resetOdometry(Pose2d pose)
     {
-        m_odometry.resetPosition(Rotation2d.fromDegrees(ahrs.getAngle()), new SwerveModulePosition[]
+        m_odometry.resetPosition(Rotation2d.fromDegrees(-ahrs.getAngle()), new SwerveModulePosition[]
         {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_rearLeft.getPosition(),
                 m_rearRight.getPosition()
         }, pose);

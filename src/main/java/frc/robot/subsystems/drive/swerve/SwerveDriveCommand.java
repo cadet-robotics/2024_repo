@@ -33,12 +33,12 @@ public class SwerveDriveCommand extends Command
     public void execute()
     {
 
-        m_drive.drive(-Utilities.applyDeadzone(RobotContainer.m_driverController.getLeftY()), // x
+        m_drive.drive(-.5*Utilities.applyDeadzone(RobotContainer.m_driverController.getLeftY()), // x
                                                                                               // speed
-                -Utilities.applyDeadzone(RobotContainer.m_driverController.getLeftX()), // y speed
-                -Utilities.applyDeadzone(RobotContainer.m_driverController.getRightX()), // rot
+                -.5*Utilities.applyDeadzone(RobotContainer.m_driverController.getLeftX()), // y speed
+                -.5*Utilities.applyDeadzone(RobotContainer.m_driverController.getRightX()), // rot
                                                                                          // speed
-                false, true);
+                true, true);
     }
 
     // Called once the command ends or is interrupted.
