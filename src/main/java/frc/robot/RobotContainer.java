@@ -8,8 +8,11 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.FireCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.climber.ClimberAscendCommand;
+import frc.robot.subsystems.climber.ClimberDescendCommand;
 import frc.robot.subsystems.climber.ClimberSubsystem;
 import frc.robot.subsystems.drive.swerve.DriveSubsystem;
+import frc.robot.subsystems.drive.swerve.SwerveDriveZero;
 import frc.robot.subsystems.intake.IntakeCommand;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.intake.OuttakeCommand;
@@ -19,6 +22,7 @@ import frc.robot.subsystems.launcherElevation.LauncherElevationSubsystem;
 import frc.robot.subsystems.launcherFiring.LauncherFiringSubsystem;
 import frc.robot.subsystems.limitSwitchStateMonitor.SensorStateMonitorSubsystem;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -86,21 +90,34 @@ public class RobotContainer
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
         // m_driverController.button(1).whileTrue(m_exampleSubsystem.exampleMethodCommand());
+        
         m_driverController.L2().whileTrue(new OuttakeCommand(intake));
         m_driverController.R2().whileTrue(new IntakeCommand(intake));
-
+        m_driverController.L1().and(m_driverController.R1()).onTrue(new SwerveDriveZero(drive));
         // m_coDriverController.L1().whileTrue(
-        //     Commands.sequence(
-        //         new HomeElevation(elevation).unless(elevation::HasBeenHomed),
-        //         new ElevateToPosition(elevation,-3.0)
-        //     )
-        //     );
+            
 
 
 
+        // set triangle button to trigger Ascend command
+        m_coDriverController.triangle().whileTrue(new ClimberAscendCommand(climber));
 
+        // set cross button to trigger Descend command
+        m_coDriverController.cross().whileTrue(new ClimberDescendCommand(climber));
         m_coDriverController.L2().and(m_coDriverController.R2()).whileTrue(new FireCommand(launcher,intake));
         m_coDriverController.pov(0).whileTrue(new HomeElevation(elevation));
+        m_coDriverController.pov(90).whileTrue(
+            Commands.sequence(
+                new HomeElevation(elevation).unless(elevation::HasBeenHomed),
+                new ElevateToPosition(elevation,75)
+            )
+            );
+        m_coDriverController.pov(180).whileTrue(
+            Commands.sequence(
+                new HomeElevation(elevation).unless(elevation::HasBeenHomed),
+                new ElevateToPosition(elevation,150)
+            )
+            );
         //.button(1).and(m_coDriverController.button(2)).whileTrue(getAutonomousCommand())
     }
 

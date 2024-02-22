@@ -59,7 +59,7 @@ public class DriveSubsystem extends SubsystemBase
     // Odometry class for tracking robot pose
     SwerveDriveOdometry m_odometry =
             new SwerveDriveOdometry(SwerveConstants.DriveConstants.kDriveKinematics,
-                    Rotation2d.fromDegrees(ahrs.getAngle()), new SwerveModulePosition[]
+                    Rotation2d.fromDegrees(-ahrs.getAngle()), new SwerveModulePosition[]
                     {m_frontLeft.getPosition(), m_frontRight.getPosition(),
                             m_rearLeft.getPosition(), m_rearRight.getPosition()
                     });
@@ -74,11 +74,11 @@ public class DriveSubsystem extends SubsystemBase
     public void periodic()
     {
         // Update the odometry in the periodic block
-        m_odometry.update(Rotation2d.fromDegrees(ahrs.getAngle()), new SwerveModulePosition[]
+        m_odometry.update(Rotation2d.fromDegrees(-ahrs.getAngle()), new SwerveModulePosition[]
         {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_rearLeft.getPosition(),
                 m_rearRight.getPosition()
         });
-        SmartDashboard.putNumber("gyro", ahrs.getAngle());
+        SmartDashboard.putNumber("gyro", -ahrs.getAngle());
     }
 
     /**
@@ -98,7 +98,7 @@ public class DriveSubsystem extends SubsystemBase
      */
     public void resetOdometry(Pose2d pose)
     {
-        m_odometry.resetPosition(Rotation2d.fromDegrees(ahrs.getAngle()), new SwerveModulePosition[]
+        m_odometry.resetPosition(Rotation2d.fromDegrees(-ahrs.getAngle()), new SwerveModulePosition[]
         {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_rearLeft.getPosition(),
                 m_rearRight.getPosition()
         }, pose);
@@ -195,7 +195,7 @@ public class DriveSubsystem extends SubsystemBase
         var swerveModuleStates =
                 SwerveConstants.DriveConstants.kDriveKinematics.toSwerveModuleStates(fieldRelative
                         ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered,
-                                rotDelivered, Rotation2d.fromDegrees(ahrs.getAngle()))
+                                rotDelivered, Rotation2d.fromDegrees(-ahrs.getAngle()))
                         : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates,
                 SwerveConstants.DriveConstants.kMaxSpeedMetersPerSecond);
@@ -253,7 +253,7 @@ public class DriveSubsystem extends SubsystemBase
      */
     public double getHeading()
     {
-        return ahrs.getAngle();
+        return -ahrs.getAngle();
     }
 
     /**

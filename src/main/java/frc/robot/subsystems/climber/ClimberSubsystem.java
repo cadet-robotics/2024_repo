@@ -2,10 +2,8 @@ package frc.robot.subsystems.climber;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
-import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.limitSwitchStateMonitor.SensorStateMonitorSubsystem;
 
 /**
@@ -24,11 +22,7 @@ public class ClimberSubsystem extends SubsystemBase
     {        
         this.limitSwitchSubsystem = limitSwitchSubsystem;
 
-        // set triangle button to trigger Ascend command
-        RobotContainer.m_coDriverController.button(PS4Controller.Button.kTriangle.value).whileTrue(new ClimberAscendCommand(this));
-
-        // set cross button to trigger Descend command
-        RobotContainer.m_coDriverController.button(PS4Controller.Button.kCross.value).whileTrue(new ClimberDescendCommand(this));
+        
     }
 
     @Override

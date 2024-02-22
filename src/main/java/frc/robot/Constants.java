@@ -40,7 +40,7 @@ public final class Constants
 
         public static final double CLIMB_ASCEND_SPEED = 0.5;
         public static final double CLIMB_DESCEND_SPEED = -0.25;
-        public static final double DEADZONE = 0.065;
+        public static final double DEADZONE = 0.13;
         public static final double INTAKE_SPEED = .5;
     }
 }
