@@ -281,10 +281,10 @@ public class DriveSubsystem extends SubsystemBase
     }
 
     /** Zeroes the heading of the robot. */
-    public void zeroHeading()
-    {
-        ahrs.reset();
-    }
+    // public void zeroHeading()
+    // {
+    //     ahrs.reset();
+    // }
 
     /**
      * Returns the heading of the robot.

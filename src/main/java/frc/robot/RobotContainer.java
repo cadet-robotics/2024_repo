@@ -117,7 +117,7 @@ public class RobotContainer
         
         m_driverController.L2().whileTrue(new OuttakeCommand(intake));
         m_driverController.R2().whileTrue(new IntakeCommand(intake));
-        m_driverController.L1().and(m_driverController.R1()).onTrue(new SwerveDriveZero(drive));
+        m_driverController.share().and(m_driverController.options()).onTrue(new SwerveDriveZero(drive));
         // m_coDriverController.L1().whileTrue(
             
 

@@ -5,6 +5,8 @@
 package frc.robot.subsystems.drive.swerve;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class SwerveDriveZero extends Command {
@@ -20,7 +22,7 @@ public class SwerveDriveZero extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drive.zeroHeading();
+    m_drive.resetOdometry(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(180)));;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
