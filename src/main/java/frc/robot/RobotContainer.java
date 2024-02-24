@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.FireCommand;
+import frc.robot.commands.SpinUpCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.climber.ClimberAscendCommand;
 import frc.robot.subsystems.climber.ClimberDescendCommand;
@@ -128,7 +129,8 @@ public class RobotContainer
 
         // set cross button to trigger Descend command
         m_coDriverController.cross().whileTrue(new ClimberDescendCommand(climber));
-        m_coDriverController.L2().and(m_coDriverController.R2()).whileTrue(new FireCommand(launcher,intake));
+        m_coDriverController.L2().onTrue(new SpinUpCommand(launcher)).onFalse(Commands.run(()->launcher.StopAllMotors(),launcher));
+        m_coDriverController.R2().whileTrue(new FireCommand(launcher,intake));
         m_coDriverController.pov(0).whileTrue(new HomeElevation(elevation));
         m_coDriverController.pov(90).whileTrue(
             Commands.sequence(

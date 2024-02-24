@@ -14,7 +14,7 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants
-{
+{   
     public static class OperatorConstants
     {
         //Controller ports
@@ -44,5 +44,11 @@ public final class Constants
         public static final double SLOW_FACTOR = .5;
         public static final double DEADZONE = 0.13;
         public static final double INTAKE_SPEED = .5;
+        public static final int LAUNCH_1_SPEED = 3400;
+        public static final int LAUNCH_2_SPEED = 4300;
+        public static final double LAUNCHER_TOP_SPEED = 0.75;
+        public static final double LAUNCHER_BOTTOM_SPEED = 0.60;
+        public static final double DELAY_FOR_SHOOT_START = 1.5;
+        public static final double DELAY_FOR_SHOOTING = 2;
     }
 }
