@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems.drive.swerve;
 
+import java.io.PipedInputStream;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.OperatorConstants;
@@ -12,7 +14,7 @@ import frc.robot.utilities.Utilities;
 public class SwerveDriveCommand extends Command
 {
     DriveSubsystem m_drive;
-
+    PIDController pidController = new PIDController(.011,0,0.0001);
     /** Creates a new DriveWithGampad. */
     public SwerveDriveCommand(DriveSubsystem drive)
     {
@@ -34,9 +36,12 @@ public class SwerveDriveCommand extends Command
     public void execute()
     {
         double driveScaler =  RobotContainer.m_driverController.L1().getAsBoolean()?OperatorConstants.SLOW_FACTOR:1;
-        m_drive.drive(-driveScaler*Utilities.applyDeadzone(RobotContainer.m_driverController.getLeftY()), // x speed
-                -driveScaler*Utilities.applyDeadzone(RobotContainer.m_driverController.getLeftX()), // y speed
-                -driveScaler*Utilities.applyDeadzone(RobotContainer.m_driverController.getRightX()), // rot speed
+        
+        m_drive.drive(driveScaler*Utilities.applyDeadzone(RobotContainer.m_driverController.getLeftY()), // x speed
+                driveScaler*Utilities.applyDeadzone(RobotContainer.m_driverController.getLeftX()), // y speed
+                RobotContainer.m_driverController.R1().getAsBoolean()?
+                    pidController.calculate(m_drive.getHeading(), 0.0):
+                    -driveScaler*Utilities.applyDeadzone(RobotContainer.m_driverController.getRightX()), // rot speed
                 true, true);
     }
 

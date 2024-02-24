@@ -26,8 +26,10 @@ public class SpinUpCommand extends Command
     @Override
     public void execute()
     {
-        launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.TOP, Constants.OperatorConstants.LAUNCHER_TOP_SPEED);
-        launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.BOTTOM, Constants.OperatorConstants.LAUNCHER_BOTTOM_SPEED);
+        // launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.TOP, Constants.OperatorConstants.LAUNCHER_TOP_OUTPUT);
+        // launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.BOTTOM, Constants.OperatorConstants.LAUNCHER_BOTTOM_OUTPUT);
+        launcherFiringSubsystem.setLauncher1Speed(Constants.OperatorConstants.LAUNCH_1_SPEED);
+        launcherFiringSubsystem.setLauncher2Speed(Constants.OperatorConstants.LAUNCH_2_SPEED);
     }
 
     @Override

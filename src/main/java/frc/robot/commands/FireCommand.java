@@ -48,8 +48,10 @@ public class FireCommand extends Command
     public void execute()
     // TODO: figure out timings to set an amount of time for motors to run once pressed
     {
-        launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.TOP, Constants.OperatorConstants.LAUNCHER_TOP_SPEED);
-        launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.BOTTOM, Constants.OperatorConstants.LAUNCHER_BOTTOM_SPEED);
+        // launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.TOP, Constants.OperatorConstants.LAUNCHER_TOP_OUTPUT);
+        // launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.BOTTOM, Constants.OperatorConstants.LAUNCHER_BOTTOM_OUTPUT);
+        launcherFiringSubsystem.setLauncher1Speed(Constants.OperatorConstants.LAUNCH_1_SPEED);
+        launcherFiringSubsystem.setLauncher2Speed(Constants.OperatorConstants.LAUNCH_2_SPEED);
         if(time.hasElapsed(Constants.OperatorConstants.DELAY_FOR_SHOOT_START) || launcherFiringSubsystem.isUpToSpeed())
             intakeSubsystem.setIntake(1);
         

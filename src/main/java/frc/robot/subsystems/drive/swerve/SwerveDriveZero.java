@@ -22,7 +22,7 @@ public class SwerveDriveZero extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drive.resetOdometry(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(180)));;
+    m_drive.resetOdometry(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(0)));;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,4 +38,10 @@ public class SwerveDriveZero extends Command {
   public boolean isFinished() {
     return true;
   }
+  
+  @Override
+  public boolean runsWhenDisabled(){
+    return true;
+  }
+  
 }
