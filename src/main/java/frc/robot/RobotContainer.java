@@ -172,6 +172,10 @@ public class RobotContainer
             PathPlannerPath path = new PathPlannerPath(bezierPoints, 
             new PathConstraints(2.50, 2.50, Units.degreesToRadians(180), Units.degreesToRadians(180)),  
             new GoalEndState(0.0, currentPose.getRotation()));
+            // Prevent this path from being flipped on the red alliance, since the given positions are already correct
+            path.preventFlipping = true;
+
+            AutoBuilder.followPath(path).schedule();
         }));
 
     }

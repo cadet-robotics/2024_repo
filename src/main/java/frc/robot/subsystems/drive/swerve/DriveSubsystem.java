@@ -18,7 +18,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 
@@ -100,6 +99,8 @@ public class DriveSubsystem extends SubsystemBase
         {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_rearLeft.getPosition(),
                 m_rearRight.getPosition()
         });
+        SmartDashboard.putNumber("PoseX", m_odometry.getPoseMeters().getTranslation().getX());
+        SmartDashboard.putNumber("PoseY", m_odometry.getPoseMeters().getTranslation().getY());
         SmartDashboard.putNumber("gyro", getHeading());
     }
 
