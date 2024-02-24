@@ -145,19 +145,19 @@ public class RobotContainer
         //.button(1).and(m_coDriverController.button(2)).whileTrue(getAutonomousCommand())
     
         // Add a button to run the example auto to SmartDashboard, this will also be in the auto chooser built above
-        SmartDashboard.putData("Example Auto", new PathPlannerAuto("Example Auto"));
+        // SmartDashboard.putData("Example Auto", new PathPlannerAuto("Example Auto"));
 
         // Add a button to run pathfinding commands to SmartDashboard
-        SmartDashboard.putData("Pathfind to Pickup Pos", AutoBuilder.pathfindToPose(
-            new Pose2d(14.0, 6.5, Rotation2d.fromDegrees(0)), 
-            new PathConstraints(
-            4.0, 4.0, 
-            Units.degreesToRadians(360), Units.degreesToRadians(540)),0,2.0));
-            SmartDashboard.putData("Pathfind to Scoring Pos", AutoBuilder.pathfindToPose(
-            new Pose2d(2.15, 3.0, Rotation2d.fromDegrees(180)), 
-            new PathConstraints(
-            4.0, 4.0, 
-            Units.degreesToRadians(360), Units.degreesToRadians(540)),0,0));
+        // SmartDashboard.putData("Pathfind to Pickup Pos", AutoBuilder.pathfindToPose(
+        //     new Pose2d(14.0, 6.5, Rotation2d.fromDegrees(0)), 
+        //     new PathConstraints(
+        //     4.0, 4.0, 
+        //     Units.degreesToRadians(360), Units.degreesToRadians(540)),0,2.0));
+        //     SmartDashboard.putData("Pathfind to Scoring Pos", AutoBuilder.pathfindToPose(
+        //     new Pose2d(2.15, 3.0, Rotation2d.fromDegrees(180)), 
+        //     new PathConstraints(
+        //     4.0, 4.0, 
+        //     Units.degreesToRadians(360), Units.degreesToRadians(540)),0,0));
 
         // Add a button to SmartDashboard that will create and follow an on-the-fly path
         // This example will simply move the robot 2m in the +X field direction
@@ -170,7 +170,7 @@ public class RobotContainer
 
             List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(startPos, endPos);
             PathPlannerPath path = new PathPlannerPath(bezierPoints, 
-            new PathConstraints(4.0, 4.0, Units.degreesToRadians(360), Units.degreesToRadians(540)),  
+            new PathConstraints(2.50, 2.50, Units.degreesToRadians(180), Units.degreesToRadians(180)),  
             new GoalEndState(0.0, currentPose.getRotation()));
         }));
 
