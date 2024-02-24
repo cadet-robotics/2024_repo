@@ -6,6 +6,7 @@ package frc.robot.subsystems.drive.swerve;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.OperatorConstants;
 import frc.robot.utilities.Utilities;
 
 public class SwerveDriveCommand extends Command
@@ -32,12 +33,10 @@ public class SwerveDriveCommand extends Command
     @Override
     public void execute()
     {
-
-        m_drive.drive(-.5*Utilities.applyDeadzone(RobotContainer.m_driverController.getLeftY()), // x
-                                                                                              // speed
-                -.5*Utilities.applyDeadzone(RobotContainer.m_driverController.getLeftX()), // y speed
-                -.5*Utilities.applyDeadzone(RobotContainer.m_driverController.getRightX()), // rot
-                                                                                         // speed
+        double driveScaler =  RobotContainer.m_driverController.L1().getAsBoolean()?OperatorConstants.SLOW_FACTOR:1;
+        m_drive.drive(-driveScaler*Utilities.applyDeadzone(RobotContainer.m_driverController.getLeftY()), // x speed
+                -driveScaler*Utilities.applyDeadzone(RobotContainer.m_driverController.getLeftX()), // y speed
+                -driveScaler*Utilities.applyDeadzone(RobotContainer.m_driverController.getRightX()), // rot speed
                 true, true);
     }
 
@@ -45,7 +44,7 @@ public class SwerveDriveCommand extends Command
     @Override
     public void end(boolean interrupted)
     {
-
+        m_drive.drive(0, 0, 0, true, true);
     }
 
     // Returns true when the command should end.

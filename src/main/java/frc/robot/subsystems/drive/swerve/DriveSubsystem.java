@@ -5,6 +5,7 @@
 package frc.robot.subsystems.drive.swerve;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -17,6 +18,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 
 public class DriveSubsystem extends SubsystemBase
@@ -67,6 +69,25 @@ public class DriveSubsystem extends SubsystemBase
     /** Creates a new DriveSubsystem. */
     public DriveSubsystem()
     {
+        AutoBuilder.configureHolonomic(
+            this::getPose, 
+            this::resetOdometry, 
+            this::getSpeeds, 
+            this::driveSpeeds, 
+            SwerveConstants.AutoConstants.pathFollowerConfig,
+            () -> {
+                // Boolean supplier that controls when the path will be mirrored for the red alliance
+                // This will flip the path being followed to the red side of the field.
+                // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
+            },
+            this
+        );
         setDefaultCommand(new SwerveDriveCommand(this));
     }
 
@@ -78,7 +99,9 @@ public class DriveSubsystem extends SubsystemBase
         {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_rearLeft.getPosition(),
                 m_rearRight.getPosition()
         });
-        SmartDashboard.putNumber("gyro", -ahrs.getAngle());
+        SmartDashboard.putNumber("PoseX", m_odometry.getPoseMeters().getTranslation().getX());
+        SmartDashboard.putNumber("PoseY", m_odometry.getPoseMeters().getTranslation().getY());
+        SmartDashboard.putNumber("gyro", getHeading());
     }
 
     /**
@@ -192,11 +215,17 @@ public class DriveSubsystem extends SubsystemBase
                 ySpeedCommanded * SwerveConstants.DriveConstants.kMaxSpeedMetersPerSecond;
         double rotDelivered = m_currentRotation * SwerveConstants.DriveConstants.kMaxAngularSpeed;
 
-        var swerveModuleStates =
-                SwerveConstants.DriveConstants.kDriveKinematics.toSwerveModuleStates(fieldRelative
+        
+        driveSpeeds(fieldRelative
                         ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered,
-                                rotDelivered, Rotation2d.fromDegrees(-ahrs.getAngle()))
+                                rotDelivered,m_odometry.getPoseMeters().getRotation())
                         : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
+
+    }
+
+    public void driveSpeeds(ChassisSpeeds speeds){
+        var swerveModuleStates =
+                SwerveConstants.DriveConstants.kDriveKinematics.toSwerveModuleStates(speeds);
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates,
                 SwerveConstants.DriveConstants.kMaxSpeedMetersPerSecond);
         m_frontLeft.setDesiredState(swerveModuleStates[0]);
@@ -231,6 +260,18 @@ public class DriveSubsystem extends SubsystemBase
         m_rearRight.setDesiredState(desiredStates[3]);
     }
 
+    public SwerveModuleState[] getModuleStates() {
+        SwerveModuleState[] states = new SwerveModuleState[4];
+        states[0] = m_frontLeft.getState();
+        states[1] = m_frontRight.getState();
+        states[2] = m_rearLeft.getState();
+        states[3] = m_rearRight.getState();
+        return states;
+    }
+
+    public ChassisSpeeds getSpeeds() {
+        return SwerveConstants.DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates());
+    }
     /** Resets the drive encoders to currently read a position of 0. */
     public void resetEncoders()
     {
@@ -241,10 +282,10 @@ public class DriveSubsystem extends SubsystemBase
     }
 
     /** Zeroes the heading of the robot. */
-    public void zeroHeading()
-    {
-        ahrs.reset();
-    }
+    // public void zeroHeading()
+    // {
+    //     ahrs.reset();
+    // }
 
     /**
      * Returns the heading of the robot.
@@ -253,7 +294,7 @@ public class DriveSubsystem extends SubsystemBase
      */
     public double getHeading()
     {
-        return -ahrs.getAngle();
+        return m_odometry.getPoseMeters().getRotation().getDegrees();
     }
 
     /**

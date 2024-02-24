@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems.drive.swerve;
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
@@ -22,6 +25,9 @@ import edu.wpi.first.math.util.Units;
  */
 public final class SwerveConstants
 {
+    // Distance between centers of right and left wheels on robot
+    public static final double kWheelBase = Units.inchesToMeters(26.5);
+
     public static final class DriveConstants
     {
         // Driving Parameters - Note that these are not the maximum capable speeds of
@@ -34,8 +40,7 @@ public final class SwerveConstants
 
         // Chassis configuration
         public static final double kTrackWidth = Units.inchesToMeters(26.5);
-        // Distance between centers of right and left wheels on robot
-        public static final double kWheelBase = Units.inchesToMeters(26.5);
+        
         // Distance between front and back wheels on robot
         public static final SwerveDriveKinematics kDriveKinematics =
                 new SwerveDriveKinematics(new Translation2d(kWheelBase / 2, kTrackWidth / 2),
@@ -143,6 +148,15 @@ public final class SwerveConstants
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
                 new TrapezoidProfile.Constraints(kMaxAngularSpeedRadiansPerSecond,
                         kMaxAngularSpeedRadiansPerSecondSquared);
+                        
+
+        public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
+            new PIDConstants(5.0, 0, 0), // Translation constants 
+            new PIDConstants(5.0, 0, 0), // Rotation constants 
+            kMaxSpeedMetersPerSecond, 
+            Math.sqrt((kWheelBase / 2)*(kWheelBase / 2)*2), // Drive base radius (distance from center to furthest module) 
+            new ReplanningConfig()
+    );
     }
 
     public static final class NeoMotorConstants
