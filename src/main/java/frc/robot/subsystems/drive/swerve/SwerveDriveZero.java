@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems.drive.swerve;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class SwerveDriveZero extends Command {

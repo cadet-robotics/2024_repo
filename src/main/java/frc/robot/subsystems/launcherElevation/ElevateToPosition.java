@@ -40,11 +40,11 @@ public class ElevateToPosition extends Command
         }
         else if(error > 0)
         {
-            launcherElevationSubsystem.SetElevation(0.25);
+            launcherElevationSubsystem.SetElevation(0.5);
         }
         else if(error < 0)
         {
-            launcherElevationSubsystem.SetElevation(-0.25);
+            launcherElevationSubsystem.SetElevation(-0.5);
         }
         else
         {

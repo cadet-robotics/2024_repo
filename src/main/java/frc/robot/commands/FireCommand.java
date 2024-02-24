@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.launcherFiring.LauncherFiringSubsystem;
 import frc.robot.subsystems.launcherFiring.LauncherFiringSubsystem.LaunchMotor;
@@ -20,6 +21,7 @@ public class FireCommand extends Command
     private LauncherFiringSubsystem launcherFiringSubsystem;
     private IntakeSubsystem intakeSubsystem;
     private Timer time = new Timer();
+    
     public FireCommand(LauncherFiringSubsystem subsystem, IntakeSubsystem subsystem2)
     {
         launcherFiringSubsystem = subsystem;
@@ -29,7 +31,7 @@ public class FireCommand extends Command
 
     public boolean Loaded() 
     {
-        return !launcherFiringSubsystem.GetPhotoEyeSubsystem().GetPhotoEyeState();
+        return !intakeSubsystem.GetPhotoEyeSubsystem().GetPhotoEyeState();
     }
 
     // public boolean LaunchRequested()
@@ -46,16 +48,11 @@ public class FireCommand extends Command
     public void execute()
     // TODO: figure out timings to set an amount of time for motors to run once pressed
     {
-        if (Loaded())
-        {
-            // Motor button active, set motor power
-            
-            launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.TOP, 1);
-            launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.BOTTOM, 0.75);
-            if(time.hasElapsed(1.5))
-                intakeSubsystem.setIntake(1);
-                
-        }
+        launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.TOP, Constants.OperatorConstants.LAUNCHER_TOP_SPEED);
+        launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.BOTTOM, Constants.OperatorConstants.LAUNCHER_BOTTOM_SPEED);
+        if(time.hasElapsed(Constants.OperatorConstants.DELAY_FOR_SHOOT_START) || launcherFiringSubsystem.isUpToSpeed())
+            intakeSubsystem.setIntake(1);
+        
     
     }
     @Override
@@ -66,6 +63,6 @@ public class FireCommand extends Command
     
     @Override
     public boolean isFinished(){
-        return time.hasElapsed(3.5);
-        }
+        return time.hasElapsed(Constants.OperatorConstants.DELAY_FOR_SHOOTING + Constants.OperatorConstants.DELAY_FOR_SHOOT_START);
+    }
 }
