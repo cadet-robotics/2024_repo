@@ -38,12 +38,12 @@ public final class Constants
         public static final int LAUNCH_ELEV_DESCEND_LS = 3;
         public static final int LAUNCH_FIRE_LIGHTS = 7;
 
-        public static final double CLIMB_ASCEND_SPEED = 0.5;
-        public static final double CLIMB_DESCEND_SPEED = -0.25;
+        public static final double CLIMB_ASCEND_SPEED = 0.75; // Is Down
+        public static final double CLIMB_DESCEND_SPEED = -0.75; // Is Up
 
         public static final double SLOW_FACTOR = .5;
         public static final double DEADZONE = 0.13;
-        public static final double INTAKE_SPEED = .5;
+        public static final double INTAKE_SPEED = .8; // Was at .5
         public static final int LAUNCH_1_SPEED = 4700;// for 60% use 3400;
         public static final int LAUNCH_2_SPEED = 4700;// for 75% use 4300;
         public static final double DELAY_FOR_SHOOT_START = 1.5;

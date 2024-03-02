@@ -5,10 +5,8 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
 import frc.robot.commands.FireCommand;
 import frc.robot.commands.SpinUpCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.climber.ClimberAscendCommand;
 import frc.robot.subsystems.climber.ClimberDescendCommand;
 import frc.robot.subsystems.climber.ClimberSubsystem;
@@ -21,11 +19,11 @@ import frc.robot.subsystems.launcherElevation.ElevateToPosition;
 import frc.robot.subsystems.launcherElevation.HomeElevation;
 import frc.robot.subsystems.launcherElevation.LauncherElevationSubsystem;
 import frc.robot.subsystems.launcherFiring.LauncherFiringSubsystem;
+import frc.robot.subsystems.lights.LEDSubsytem;
 import frc.robot.subsystems.limitSwitchStateMonitor.SensorStateMonitorSubsystem;
 import java.util.List;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -36,7 +34,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -52,13 +49,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
     private final DriveSubsystem drive;
     private final IntakeSubsystem intake;
     private final LauncherFiringSubsystem launcher;
     private final LauncherElevationSubsystem elevation;
     private final ClimberSubsystem climber;
     private final SensorStateMonitorSubsystem sensorStateMonitor;
+    public final LEDSubsytem ledSubsytem;
     
     // Replace with CommandPS4Controller or CommandJoystick if needed
     public static final CommandPS4Controller m_driverController =
@@ -79,7 +76,7 @@ public class RobotContainer
         climber = new ClimberSubsystem(sensorStateMonitor);
         elevation = new LauncherElevationSubsystem(sensorStateMonitor);
         launcher = new LauncherFiringSubsystem(sensorStateMonitor);
-
+        ledSubsytem = new LEDSubsytem();
         NamedCommands.registerCommand("HomeElevation", Commands.sequence(new HomeElevation(elevation)));
         NamedCommands.registerCommand("ShootNote", Commands.sequence(new FireCommand(launcher, intake)));
         NamedCommands.registerCommand("IntakeNote", Commands.sequence(new IntakeCommand(intake)));
