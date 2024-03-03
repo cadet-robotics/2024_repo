@@ -5,9 +5,10 @@
 package frc.robot.subsystems.lights;
 
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** Add your docs here. */
-public class LEDSubsytem 
+public class LEDSubsytem extends SubsystemBase
 {
     private PWMSparkMax ledController;
 

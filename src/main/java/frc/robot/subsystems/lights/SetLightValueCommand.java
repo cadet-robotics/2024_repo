@@ -5,6 +5,8 @@
 package frc.robot.subsystems.lights;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.intake.IntakeCommand;
+import frc.robot.subsystems.intake.IntakeSubsystem;
 
 public class SetLightValueCommand extends Command {
 
@@ -15,15 +17,14 @@ public class SetLightValueCommand extends Command {
         this.value = value;
         this.ledSubsytem = ledSubsystem;
     }
-
-    @Override
-    public void initialize() 
+   
+    public void periodic()
     {
-        ledSubsytem.setValue(value);
+        
     }
     @Override
     public boolean isFinished() 
     {
-        return true;
+        return false;
     }
 }

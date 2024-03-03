@@ -120,25 +120,23 @@ public class RobotContainer
             
 
 
-
         // set triangle button to trigger Ascend command
-        m_coDriverController.triangle().whileTrue(new ClimberAscendCommand(climber));
-
+        m_coDriverController.cross().onTrue(new ClimberAscendCommand(climber));
         // set cross button to trigger Descend command
-        m_coDriverController.cross().whileTrue(new ClimberDescendCommand(climber));
+        m_coDriverController.triangle().onTrue(new ClimberDescendCommand(climber));
         m_coDriverController.L2().onTrue(new SpinUpCommand(launcher)).onFalse(Commands.run(()->launcher.StopAllMotors(),launcher));
-        m_coDriverController.R2().whileTrue(new FireCommand(launcher,intake));
+        m_coDriverController.circle().whileTrue(new FireCommand(launcher,intake));
         m_coDriverController.pov(0).whileTrue(new HomeElevation(elevation));
         m_coDriverController.pov(90).whileTrue(
             Commands.sequence(
                 new HomeElevation(elevation).unless(elevation::HasBeenHomed),
-                new ElevateToPosition(elevation,75)
+                new ElevateToPosition(elevation,75.669)
             )
             );
         m_coDriverController.pov(180).whileTrue(
             Commands.sequence(
                 new HomeElevation(elevation).unless(elevation::HasBeenHomed),
-                new ElevateToPosition(elevation,150)
+                new ElevateToPosition(elevation,27.6188)
             )
             );
         //.button(1).and(m_coDriverController.button(2)).whileTrue(getAutonomousCommand())

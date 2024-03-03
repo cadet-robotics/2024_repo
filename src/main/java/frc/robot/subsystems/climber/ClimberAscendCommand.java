@@ -41,5 +41,9 @@ public class ClimberAscendCommand extends Command
     public void end(boolean interrupted)
     {
         climberSubsystem.ClimberMotor().set(0);
-    }    
+    }
+    @Override
+    public boolean isFinished(){
+        return climberSubsystem.GetLimitSwitchSubsystem().GetLimitSwitchState(OperatorConstants.CLIMB_ASCEND_LS);
+    }
 }

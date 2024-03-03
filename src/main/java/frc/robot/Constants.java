@@ -53,4 +53,8 @@ public final class Constants
     public static final double LAUNCHER_P = 0.0001;
     public static final double LAUNCHER_D = 0;
     public static final double LAUNCHER_FF = 0.000175;
+    public static final class PWMConstants {
+        public static final int LED_PWM = 0;
+    }
+    
 }
