@@ -38,7 +38,7 @@ public final class Constants
         public static final int LAUNCH_ELEV_DESCEND_LS = 3;
         public static final int LAUNCH_FIRE_LIGHTS = 7;
 
-        public static final double CLIMB_ASCEND_SPEED = 0.75; // Is Down
+        public static final double CLIMB_ASCEND_SPEED = 0.25; // Is Down
         public static final double CLIMB_DESCEND_SPEED = -0.75; // Is Up
 
         public static final double SLOW_FACTOR = .5;

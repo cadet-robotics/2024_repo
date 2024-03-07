@@ -19,7 +19,6 @@ import frc.robot.subsystems.launcherElevation.ElevateToPosition;
 import frc.robot.subsystems.launcherElevation.HomeElevation;
 import frc.robot.subsystems.launcherElevation.LauncherElevationSubsystem;
 import frc.robot.subsystems.launcherFiring.LauncherFiringSubsystem;
-import frc.robot.subsystems.lights.LEDSubsytem;
 import frc.robot.subsystems.limitSwitchStateMonitor.SensorStateMonitorSubsystem;
 import java.util.List;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -55,7 +54,6 @@ public class RobotContainer
     private final LauncherElevationSubsystem elevation;
     private final ClimberSubsystem climber;
     private final SensorStateMonitorSubsystem sensorStateMonitor;
-    public final LEDSubsytem ledSubsytem;
     
     // Replace with CommandPS4Controller or CommandJoystick if needed
     public static final CommandPS4Controller m_driverController =
@@ -76,7 +74,6 @@ public class RobotContainer
         climber = new ClimberSubsystem(sensorStateMonitor);
         elevation = new LauncherElevationSubsystem(sensorStateMonitor);
         launcher = new LauncherFiringSubsystem(sensorStateMonitor);
-        ledSubsytem = new LEDSubsytem();
         NamedCommands.registerCommand("HomeElevation", Commands.sequence(new HomeElevation(elevation)));
         NamedCommands.registerCommand("ShootNote", Commands.sequence(new FireCommand(launcher, intake)));
         NamedCommands.registerCommand("IntakeNote", Commands.sequence(new IntakeCommand(intake)));
@@ -121,9 +118,9 @@ public class RobotContainer
 
 
         // set triangle button to trigger Ascend command
-        m_coDriverController.cross().onTrue(new ClimberAscendCommand(climber));
+        m_coDriverController.cross().whileTrue(new ClimberAscendCommand(climber));
         // set cross button to trigger Descend command
-        m_coDriverController.triangle().onTrue(new ClimberDescendCommand(climber));
+        m_coDriverController.triangle().whileTrue(new ClimberDescendCommand(climber));
         m_coDriverController.L2().onTrue(new SpinUpCommand(launcher)).onFalse(Commands.run(()->launcher.StopAllMotors(),launcher));
         m_coDriverController.circle().whileTrue(new FireCommand(launcher,intake));
         m_coDriverController.pov(0).whileTrue(new HomeElevation(elevation));
