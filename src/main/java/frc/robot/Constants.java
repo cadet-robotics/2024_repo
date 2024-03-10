@@ -50,6 +50,7 @@ public final class Constants
         public static final int AMP_LAUNCH_2_SPEED = 1700;// for 75% use 4300;
         public static final double DELAY_FOR_SHOOT_START = 1.5;
         public static final double DELAY_FOR_SHOOTING = 2;
+        public static final int BLINKIN_LED_CONTROLLER_PORT = 9;
     }
 
     public static final double LAUNCHER_P = 0.0001;
