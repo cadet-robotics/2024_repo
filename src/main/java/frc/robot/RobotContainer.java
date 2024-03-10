@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AmpFireCommand;
 import frc.robot.commands.FireCommand;
 import frc.robot.commands.SpinUpCommand;
 import frc.robot.subsystems.climber.ClimberAscendCommand;
@@ -123,6 +124,7 @@ public class RobotContainer
         m_coDriverController.triangle().whileTrue(new ClimberDescendCommand(climber));
         m_coDriverController.L2().onTrue(new SpinUpCommand(launcher)).onFalse(Commands.run(()->launcher.StopAllMotors(),launcher));
         m_coDriverController.circle().whileTrue(new FireCommand(launcher,intake));
+         m_coDriverController.R2().whileTrue(new AmpFireCommand(launcher,intake));
         m_coDriverController.pov(0).whileTrue(new HomeElevation(elevation));
         m_coDriverController.pov(90).whileTrue(
             Commands.sequence(

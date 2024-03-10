@@ -30,8 +30,6 @@ public class LauncherFiringSubsystem extends SubsystemBase
         new CANSparkMax(OperatorConstants.LAUNCH_MOTOR_ID2, MotorType.kBrushless)
     };
 
-    private SensorStateMonitorSubsystem sensorSubsystem;
-
     public static enum LaunchMotor{
         BOTTOM,
         TOP
@@ -41,7 +39,6 @@ public class LauncherFiringSubsystem extends SubsystemBase
     /** Creates a new Subsystem. */
     public LauncherFiringSubsystem(SensorStateMonitorSubsystem sensorSubsystem)
     {
-        this.sensorSubsystem = sensorSubsystem;
         launchEncoder1 = launchMotors[0].getEncoder();
         launchEncoder2= launchMotors[1].getEncoder();
         launchPID1 = launchMotors[0].getPIDController();

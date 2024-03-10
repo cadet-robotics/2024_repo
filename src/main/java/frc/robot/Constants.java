@@ -44,8 +44,10 @@ public final class Constants
         public static final double SLOW_FACTOR = .5;
         public static final double DEADZONE = 0.13;
         public static final double INTAKE_SPEED = .8; // Was at .5
-        public static final int LAUNCH_1_SPEED = 4700;// for 60% use 3400;
-        public static final int LAUNCH_2_SPEED = 4700;// for 75% use 4300;
+        public static final int LAUNCH_1_SPEED = 5000;// for 60% use 3400, was at 4700 for 80%;
+        public static final int LAUNCH_2_SPEED = 5000;// for 75% use 4300;
+        public static final int AMP_LAUNCH_1_SPEED = 1700;// for 60% use 3400;
+        public static final int AMP_LAUNCH_2_SPEED = 1700;// for 75% use 4300;
         public static final double DELAY_FOR_SHOOT_START = 1.5;
         public static final double DELAY_FOR_SHOOTING = 2;
     }

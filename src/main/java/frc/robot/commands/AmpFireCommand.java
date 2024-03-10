@@ -13,7 +13,7 @@ import frc.robot.subsystems.launcherFiring.LauncherFiringSubsystem;
 /**
  * Command used to control firing the note based on input from controller
  */
-public class FireCommand extends Command
+public class AmpFireCommand extends Command
 {
 
     // controlling subsystem
@@ -21,7 +21,7 @@ public class FireCommand extends Command
     private IntakeSubsystem intakeSubsystem;
     private Timer time = new Timer();
     
-    public FireCommand(LauncherFiringSubsystem subsystem, IntakeSubsystem subsystem2)
+    public AmpFireCommand(LauncherFiringSubsystem subsystem, IntakeSubsystem subsystem2)
     {
         launcherFiringSubsystem = subsystem;
         intakeSubsystem = subsystem2;
@@ -33,11 +33,6 @@ public class FireCommand extends Command
         return !intakeSubsystem.GetPhotoEyeSubsystem().GetPhotoEyeState();
     }
 
-    // public boolean LaunchRequested()
-    // {
-    //     return RobotContainer.m_coDriverController.getR2Axis() > OperatorConstants.DEADZONE && 
-    //            RobotContainer.m_coDriverController.getL2Axis() > OperatorConstants.DEADZONE;
-    // }
     @Override
     public void initialize() {
         time.restart();
@@ -45,12 +40,9 @@ public class FireCommand extends Command
 
     @Override
     public void execute()
-    // TODO: figure out timings to set an amount of time for motors to run once pressed
     {
-        // launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.TOP, Constants.OperatorConstants.LAUNCHER_TOP_OUTPUT);
-        // launcherFiringSubsystem.ControlLaunchMotor(LaunchMotor.BOTTOM, Constants.OperatorConstants.LAUNCHER_BOTTOM_OUTPUT);
-        launcherFiringSubsystem.setLauncher1Speed(Constants.OperatorConstants.LAUNCH_1_SPEED);
-        launcherFiringSubsystem.setLauncher2Speed(Constants.OperatorConstants.LAUNCH_2_SPEED);
+        launcherFiringSubsystem.setLauncher1Speed(Constants.OperatorConstants.AMP_LAUNCH_1_SPEED);
+        launcherFiringSubsystem.setLauncher2Speed(Constants.OperatorConstants.AMP_LAUNCH_2_SPEED);
         if(time.hasElapsed(Constants.OperatorConstants.DELAY_FOR_SHOOT_START) || launcherFiringSubsystem.isUpToSpeed())
             intakeSubsystem.setIntake(1);
         
