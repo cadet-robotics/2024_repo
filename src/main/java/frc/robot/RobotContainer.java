@@ -5,7 +5,6 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.AmpFireCommand;
 import frc.robot.commands.FireCommand;
 import frc.robot.commands.SpinUpCommand;
 import frc.robot.subsystems.climber.ClimberAscendCommand;
@@ -124,39 +123,7 @@ public class RobotContainer
         m_coDriverController.triangle().whileTrue(new ClimberDescendCommand(climber));
         m_coDriverController.L2().onTrue(new SpinUpCommand(launcher)).onFalse(Commands.run(()->launcher.StopAllMotors(),launcher));
         m_coDriverController.circle().whileTrue(new FireCommand(launcher,intake));
-         m_coDriverController.R2().whileTrue(new AmpFireCommand(launcher,intake));
         m_coDriverController.pov(0).whileTrue(new HomeElevation(elevation));
-        m_coDriverController.pov(90).whileTrue(
-            Commands.sequence(
-                new HomeElevation(elevation).unless(elevation::HasBeenHomed),
-                new ElevateToPosition(elevation,75.669)
-            )
-            );
-        m_coDriverController.pov(180).whileTrue(
-            Commands.sequence(
-                new HomeElevation(elevation).unless(elevation::HasBeenHomed),
-                new ElevateToPosition(elevation,27.6188)
-            )
-            );
-        //.button(1).and(m_coDriverController.button(2)).whileTrue(getAutonomousCommand())
-    
-        // Add a button to run the example auto to SmartDashboard, this will also be in the auto chooser built above
-        // SmartDashboard.putData("Example Auto", new PathPlannerAuto("Example Auto"));
-
-        // Add a button to run pathfinding commands to SmartDashboard
-        // SmartDashboard.putData("Pathfind to Pickup Pos", AutoBuilder.pathfindToPose(
-        //     new Pose2d(14.0, 6.5, Rotation2d.fromDegrees(0)), 
-        //     new PathConstraints(
-        //     4.0, 4.0, 
-        //     Units.degreesToRadians(360), Units.degreesToRadians(540)),0,2.0));
-        //     SmartDashboard.putData("Pathfind to Scoring Pos", AutoBuilder.pathfindToPose(
-        //     new Pose2d(2.15, 3.0, Rotation2d.fromDegrees(180)), 
-        //     new PathConstraints(
-        //     4.0, 4.0, 
-        //     Units.degreesToRadians(360), Units.degreesToRadians(540)),0,0));
-
-        // Add a button to SmartDashboard that will create and follow an on-the-fly path
-        // This example will simply move the robot 2m in the +X field direction
         SmartDashboard.putData("On-the-fly path", Commands.runOnce(() -> {
             Pose2d currentPose = drive.getPose();
             
