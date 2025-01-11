@@ -117,9 +117,8 @@ public class RobotContainer
             
 
 
-        // set triangle button to trigger Ascend command
+        // The Ascend and Descend are opposite. Ascend goes down and Decend goes up.
         m_coDriverController.cross().whileTrue(new ClimberAscendCommand(climber));
-        // set cross button to trigger Descend command
         m_coDriverController.triangle().whileTrue(new ClimberDescendCommand(climber));
         m_coDriverController.L2().onTrue(new SpinUpCommand(launcher)).onFalse(Commands.run(()->launcher.StopAllMotors(),launcher));
         m_coDriverController.circle().whileTrue(new FireCommand(launcher,intake));
