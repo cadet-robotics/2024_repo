@@ -59,3 +59,16 @@ public final class Constants
     }
     
 }
+
+//Driver Controls:
+//Intake = R2
+//Outtake = L2
+//Zero The Swerve Drive = Share + Options
+
+
+//Co-Driver Controls:
+//Climber Ascend = Cross
+//Climber Descend = Triangle
+//Spin Up The Launcher = L2
+//Fire Disk = Circle
+
